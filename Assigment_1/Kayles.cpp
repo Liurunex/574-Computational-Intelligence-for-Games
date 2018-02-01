@@ -5,6 +5,8 @@
 #include <vector>
 #include <algorithm>
 #include <climits>
+#include <sstream>
+using std::istringstream;
 using std::unordered_set;
 using std::strcmp;
 using std::string;
@@ -88,10 +90,10 @@ string find_Way(string& board, vector<int>& sub_game, vector<int>& grundy_arr, v
 }
 
 int main (int argc, char** argv) {
-	if (argc == 3 && !strcmp(argv[1], "grundy")) {
+	if (argc > 2 && !strcmp(argv[1], "grundy")) {
 		int n = 0;
-		for (int i = 0; argv[2][i] != '\0'; ++ i)
-			n = n*10 + argv[2][i]-'0';
+		istringstream iss(argv[2]);
+		iss >> n;
 
 		vector<int> grundy_arr (n+1, -1);
 		grundy_arr[0] = 0;
@@ -101,7 +103,8 @@ int main (int argc, char** argv) {
 
 		cout << "[";
 		for (int i = 0; i < n+1; ++ i) {
-			cout << " " << grundy_arr[i];
+			if (i != 0) cout << " ";
+			cout << grundy_arr[i];
 			if (i != n) cout << ",";
 		}
 		cout << "]" << endl;
@@ -112,6 +115,8 @@ int main (int argc, char** argv) {
 			return 1;
 		}
 		string board(argv[1]);
+		if (board.find_first_not_of(".x") != string::npos)
+			return 1;
 		int count = 0, index = 0, max_game = 0, n = board.size();
 		while (index < n && board[index] == '.')
 			index ++;
