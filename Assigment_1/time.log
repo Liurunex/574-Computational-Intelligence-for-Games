@@ -1,0 +1,31 @@
+ESTIMATE of time to complete assignment: 5 hours
+      Time     Time
+Date  Started  Spent Work completed
+----  -------  ----  --------------
+9/12  08:00pm  2:00  read assignment and start the basic version.
+9/13  10:00am  0:30  completed the basic version based on draft introduction;
+					 passed basic test cases.
+9/19  09:00pm  2:00  revised some public fucntion into private for safety concern;
+					 initial the public function comments.
+9/25  09:00pm  1:30  revise both non-interactive and interactive mode by using try catach 
+					 statements, so that improved the time complecity.
+9/27  02:00pm  1:00  completed the public fucntion comments part, passed the eight online
+			         test cases;
+9/27  06:0pm   2:00  revise the constructor of class SpinOut, move the input checking process
+				     from main() into class function members
+               ----
+               9:00  TOTAL time spent
+
+I discussed my solution with: No one
+
+The idea of this assignment is to build the game object based on the argument input, choose the suitable
+constructor and correct play mode. The constructor itself will check the input arguments and initial the game
+board. The process of both interactive mode and non-interactive mode is similar: using a do-while loop and
+check some corner cases. 
+The difficulty of this assignment is how to handle all illegal inputs in a graceful way, how to avoid
+segmentation fault or infinite loop. I misunderstood the way of handling illegal cases as I started working 
+on the assignment when it was still a draft. Therefore I didn’t notice some requirement has been changed 
+until the few days before deadline. Fortunately, I finally get the correct concept of the assignment and 
+revise my constructor so that it now could handle the illegal parameters. I also revise my main function to
+remove the valid input checking process and put all those stuff into my SpinOut class function members.
+
