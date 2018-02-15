@@ -1,0 +1,25 @@
+ESTIMATE of time to complete assignment: 5 hours
+      Time     Time
+Date  Started  Spent Work completed
+----  -------  ----  --------------
+1/31  10:00am  2:00  read assignment and start the basic version.
+1/31  03:00pm  2:00  read the class notes and online resource about grundy number and
+					 Sprague Grundy Theorem.
+2/01  02:00pm  2:00  completed the basic version based on draft introduction;
+					 passed basic test cases.
+2/01  07:00pm  1:30  fixed the bug and added codes to deal wiht invalid input; completed
+					 the time log.
+               ----
+               7:30  TOTAL time spent
+
+I discussed my solution with: No one
+
+The idea of this assignment is how to convert the game from into Nim game model. I readed the
+the article of Grundy Number and Sprague Grundy Theorem on geeksforgeeks, so that I find a way
+to utilize recursive call and hash-set to complete the grundy number calculations. The trick part
+of this assignment is about figuring out the next move which reduces the groundy number of groups and 
+takes pins as left as possible. I use Depth-first Search to completely check each possible next moves
+from left to right, and stores those updated number of grundy number is that route in a vector. Finishing 
+this part, I then check the vector to find the minimum number of grundy number the player can get in next
+move and construt the corresponding board to print out.
+
