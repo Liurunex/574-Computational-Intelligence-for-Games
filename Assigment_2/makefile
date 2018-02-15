@@ -1,7 +1,7 @@
 CXX = g++
 CXXFLAGS = -Wall -pedantic -std=c++11
 
-Pig.16: Pig.o
+Pig: Pig.o
 	${CXX} ${CXXFLAGS} -o Pig Pig.o
 
 Pig.o: Pig.cpp
