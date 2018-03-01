@@ -1,0 +1,11 @@
+#!/bin/bash
+# Start of game
+
+trap "/usr/bin/killall -q -u $USER TwoMinute 2>/dev/null" 0 1 2 3 9 15
+trap "/bin/rm -f $STDERR" 0 1 2 3 9 15
+
+/c/cs474/bin/run -stderr=/dev/null ./TwoMinute 1 10 80 120 < /dev/null
+
+# clean up temp file
+cd ..
+rm -rf temp
