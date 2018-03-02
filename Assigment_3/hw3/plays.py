@@ -16,4 +16,3 @@ z_corner_82 = [[(28, 3, False), (-9, 4, False), (47, 3, False), (0, 1, False), (
 
 plays = [slant_37, y_cross_80, z_corner_82]
 prob = [0.20, 0.05, 0.25, 0.1, 0.4]
-
