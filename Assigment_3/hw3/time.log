@@ -1,0 +1,21 @@
+ESTIMATE of time to complete assignment: 6 hours
+      Time     Time
+Date  Started  Spent Work completed
+----  -------  ----  --------------
+2/27  10:00am  1:00  read assignment and start the basic version.
+3/01  10:00am  3:00  read the class notes and online resource about American football, the equilibrium and the linear programming, 
+					 focus on learning how to calculate the payoff matrix and the equilibrium mixed strategy.
+3/01  03:00pm  2:00  completed the basic version and passed the online test.
+3/02  01:30am  0:30  finaly check the code, and completed the time log.
+               ----
+               6:30  TOTAL time spent
+
+I discussed my solution with: No one
+
+The idea of this assignment is to use linear programming and payoff matrix to solove the equilibrium mixed strategy of this
+non-cooperative game. Since the assignment already provide the table implemented by dynamic programming to store each possible
+records with estimated value. We then can easily applied it to compute the payoff matrix. The trick part of this assigment is
+how to correctly compute the entry value inside the payoff matrix. There is some specific restrictions of this assignment requirment
+which I forget to exactly follow it to implement my program, so that I didn't get the right payoff matrix at first time. However, I
+fixed this problem and make the matrix right. Since we directly use built-in linear programming fucntion provided by python, we then
+can easily find the equilibrium mixed strategy.
