@@ -8,7 +8,7 @@ import plays
 
 def main(argv):
 	if len(argv) != 5 and len(argv) != 6:
-		print("Invalid Input")
+		# print("Invalid Input")
 		return
 	try:
 		payoff = False
@@ -21,7 +21,7 @@ def main(argv):
 		touchdown = int(argv[i+3])
 		time      = int(argv[i+4])/5
 	except:
-		print("Invalid Input")
+		# print("Invalid Input")
 		return
 
 	# pickle.load(open("/c/cs474/hw3/two_minute.pickle", "rb"))
