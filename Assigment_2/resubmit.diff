@@ -1,0 +1,12 @@
+7d6
+< #include <iomanip>
+104,109c103,104
+< 		pair<double, int> res = {0, 0};
+< 		try{
+< 			res = piggame(parameters[0], parameters[1], parameters[2]);
+< 		}
+< 		catch (...) {}
+< 		cout << std::fixed << std::setprecision(6) << res.first << " " << res.second << endl;
+---
+> 		auto res = piggame(parameters[0], parameters[1], parameters[2]);
+> 		cout << res.first << " " << res.second << endl;
