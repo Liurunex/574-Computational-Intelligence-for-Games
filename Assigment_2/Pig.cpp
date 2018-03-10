@@ -4,6 +4,7 @@
 #include <climits>
 #include <sstream>
 #include <utility>
+#include <iomanip>
 using std::istringstream;
 using std::cout;
 using std::endl;
@@ -100,8 +101,12 @@ int main (int argc, char** argv) {
 		}
 		if (parameters[1] > parameters[0] || parameters[2] > parameters[0])
 			return 0;
-		auto res = piggame(parameters[0], parameters[1], parameters[2]);
-		cout << res.first << " " << res.second << endl;
+		pair<double, int> res = {0, 0};
+		try{
+			res = piggame(parameters[0], parameters[1], parameters[2]);
+		}
+		catch (...) {}
+		cout << std::fixed << std::setprecision(6) << res.first << " " << res.second << endl;
 	}
 	return 1;
 }
