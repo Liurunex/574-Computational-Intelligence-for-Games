@@ -1,0 +1,23 @@
+ESTIMATE of time to complete assignment: 6 hours
+      Time     Time
+Date  Started  Spent Work completed
+----  -------  ----  --------------
+2/14  10:00am  2:00  read assignment and start the basic version.
+2/15  01:00pm  2:00  read the class notes and online resource about pig number, focus on
+					 learning the minimax theroy used in the game strategy.
+2/15  03:00pm  2:00  completed the basic version with calculating possibility and converting
+					 those mathmatic forms into programming language.
+2/16  10:00am  1:30  fixed the possibility bug, and completed the time log.
+               ----
+               7:30  TOTAL time spent
+
+I discussed my solution with: No one
+
+The idea of this assignment is how to calculate those possibilities and converting those mathmatic
+forms into program. The trick of this assignment is how to compute the possibility. my intial idea of 
+calculating the possibility is to use a 1-dimentional array, but later on I noticed it was not correct 
+as we need to re-compute those possibility based on the target we want to achive. On the basis of that, 
+I changed the possibility array into a 2-dimentional array, where each row represent the target to reach, 
+the each column stands the overflow number, so that I pre-compute all
+those possibilities to memorize them ahead. 
+
