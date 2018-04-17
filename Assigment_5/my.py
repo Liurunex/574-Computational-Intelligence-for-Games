@@ -1,4 +1,3 @@
-from kalah import Kalah
 from math import log, sqrt
 import random
 
@@ -59,12 +58,12 @@ def mcts(itermax, pos):
             state = state.result(random.choice(state.legal_moves()))
 
         # Backpropagate
-        terminal_state = 1 if state.game_over() else 0
+        terminal_state = state.game_over()
         curWinner = state.winner()
         while node != None:
             point = 0
             if terminal_state and (node.player == 0 and curWinner == 1) or (node.player == 1 and curWinner == -1):
-                point = 1
+                point += 1
             node.Update(point)
             node = node.parentNode
 
