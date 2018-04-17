@@ -1,98 +1,112 @@
-import random
-import datetime
+from kalah import Kalah
 from math import log, sqrt
+import random
+import copy
 
-# wins and plays are the record table used to store the game tree
-wins = {}
-plays = {}
-#seconds = 0.1
-#calculation_time = datetime.timedelta(seconds=seconds)
-max_moves = 100
-max_sims = 100
-C = 1
-r = random.Random(500)
+max_depth = 100
+nodeDict  = {}
+# wins      = {}
+# players   = {}
 
-def mcts_strategy(n):
-    def fxn(p):
-        move = mcts(p)
+def mcts_strategy(itermax):
+    def fxn(pos):
+        move = mcts(itermax, pos)
         return move
     return fxn
 
-def run_simulation(pos):
-    # A bit of an optimization here, so we have a local
-    # variable lookup instead of an attribute access each loop.
+class Node:
+    def __init__(self, move = None, state = None, parent = None, player = None):
+        self.move         = move
+        self.parentNode   = parent
+        self.childrenList = []
+        self.visitTimes   = 0
+        self.winScore     = 0
+        self.futureMoves  = state.legal_moves()
+        self.nextPlayer   = player
 
-    visited_pos = set()
-    player = pos.next_player()
-    expand = True
-    cur_pos = pos
-
-    for t in range(1, max_moves + 1):
-        legal = cur_pos.legal_moves()
-        move_pos = [(move_, cur_pos.result(move_)) for move_ in legal]
-
-        if all(plays.get((player, pos_)) for move_, pos_ in move_pos):
-            # If we have stats on all of the legal moves here, use them.
-            log_total = 2 * log(sum(plays[(player, pos_)] for move_, pos_ in move_pos))
-            value, best_move, best_pos = max(
-                ((wins[(player, pos_)] / plays[(player, pos_)]) +
-                 C * sqrt(log_total / plays[(player, pos_)]), move_, pos_)
-                for move_, pos_ in move_pos
-            )
+    def UCTselection(self):
+        total_visits = 0
+        for c in self.childrenList:
+            total_visits += c.visitTimes
+        s = sorted(self.childrenList, key = lambda c: c.winScore/c.visitTimes + sqrt(2*log(total_visits)/c.visitTimes))[-1]
+        s.parentNode = self
+        return s
+    
+    def AddNode(self, m, s, posPlayer):
+        if (posPlayer, s) in nodeDict:
+            n.move = m
+            n.parentNode = self    
+            n = nodeDict[(posPlayer, s)]   
         else:
-            # Otherwise, just make an random decision.
-            best_move, best_pos = r.choice(move_pos)
+            n = Node(move = m, state = s, parent = self, player = posPlayer)
+        nodeDict[(posPlayer, s)] = n
 
-        cur_pos = best_pos
+        self.futureMoves.remove(m)
+        self.childrenList.append(n)
+        return n
+    
+    def Update(self, result):
+        self.visitTimes += 1
+        self.winScore   += result
 
-        # `player` here and below refers to the player
-        # who moved into that particular state.
-        if expand and (player, cur_pos) not in plays:
-            expand = False
-            plays[(player, cur_pos)] = 0
-            wins[(player, cur_pos)] = 0
-
-        visited_pos.add((player, cur_pos))
-        #reset the player
-        player = cur_pos.next_player()
-        if cur_pos.game_over():
-            winner = cur_pos.winner()
-            break
-    # back propagation
-    for player_, pos_ in visited_pos:
-        if (player_, pos_) not in plays:
-            continue
-        plays[(player_, pos_)] += 1
-        if (player_ == 0 and winner == 1) or (player_ == 1 and winner == -1):
-            wins[(player_, pos_)] += 1
-
-def mcts(pos):
-    # clear out the tree at the start of each game
+def mcts(itermax, pos):
+    # check if initial state meet
+    posPlayer = pos.next_player()
     if pos.is_initial():
-        wins.clear()
-        plays.clear()
+        nodeDict.clear()
+    # check the node dict    
+    if (posPlayer, pos) in nodeDict:
+        root = nodeDict[(posPlayer, pos)]
+        root.parentNode = None
+    else:
+        root = Node(state = pos, player = posPlayer)
+        nodeDict[(posPlayer, pos)] = root
 
-    legal = pos.legal_moves()
-    # if there's no legal move or a single legal move, return
-    if not legal:
-        return
-    if len(legal) == 1:
-        return legal[0]
-    # for a limited reps, run simulation on the game tree
-    sims = 0
-    begin = datetime.datetime.utcnow()
-    while sims < max_sims:#datetime.datetime.utcnow() - begin < calculation_time:
-        run_simulation(pos)
-        sims += 1
-    # the entries of the record table
-    move_pos = [(move_, pos.result(move_)) for move_ in legal]
-    #print("wins size:", len(wins), " plays size:", len(plays))
-    # Pick the move with the highest percentage of wins.
-    player = pos.next_player()
-    percent_wins, best_move = max(
-        (wins.get((player, pos_), 0) /
-         plays.get((player, pos_), 1),
-         move_)
-        for move_, pos_ in move_pos
-    )
-    return best_move
+    # do the iteration
+    for i in range(itermax):
+        node  = root
+        state = copy.deepcopy(pos)
+
+        visited_path = set()
+
+        # Select
+        while node.futureMoves == [] and node.childrenList != []:
+            node      = node.UCTselection()
+            state     = state.result(node.move)
+            posPlayer = state.next_player()
+        
+        # Expand
+        if node.futureMoves != []:
+            rmchoice  = random.choice(node.futureMoves)
+            state     = state.result(rmchoice)
+            posPlayer = state.next_player()
+            node      = node.AddNode(rmchoice, state, posPlayer)
+
+        # Rollout
+        simuDepth = 0
+        while not state.game_over() and simuDepth < max_depth:
+            simuDepth += 1
+            state     = state.result(random.choice(state.legal_moves()))
+            posPlayer = state.next_player()
+       
+        # Backpropagate
+        terminal_state = state.game_over()
+        curWinner = state.winner()
+        while node != None:
+            point = 0
+            if terminal_state and (node.nextPlayer == 1 and curWinner == 1) or (node.nextPlayer == 0 and curWinner == -1):
+                point += 1
+            elif curWinner == 0:
+                point += 0.5
+            node.Update(point)
+            node = node.parentNode
+    
+    return sorted(root.childrenList, key = lambda c: c.winScore/c.visitTimes)[-1].move
+
+if __name__ == '__main__':
+    b = Kalah(6)
+    pos = Kalah.Position(b, [6, 4, 2, 0, 0, 2, 9, 0, 0, 2, 2, 6, 6, 9], 0)
+    print(mcts_strategy(1000)(pos))
+
+    pos = Kalah.Position(b, [0, 0, 2, 2, 6, 6, 9, 6, 4, 2, 0, 0, 2, 9], 1)
+    print(mcts_strategy(1000)(pos))
