@@ -1,107 +1,92 @@
 from kalah import Kalah
-from math import log, sqrt
-import random
-import copy
+from math import sqrt, log
+from random import choice
 
-max_depth = 100
-nodeDict  = {}
-# wins      = {}
-# players   = {}
+# dict used for DAG
+# key = (player, res)
+# value = [visits, wins]
+nodeDict = {}
+
+def mcts(pos):
+    player = pos.next_player()
+    expand = True
+    visit_path = set()
+
+    while True:
+        cur_res = [pos.result(move) for move in pos.legal_moves()]
+        if all(nodeDict.get((player, res)) for res in cur_res):
+            total_visits = 0
+            for cres in cur_res:
+                total_visits += nodeDict.get((player, cres))[0]
+            # UCB process:
+            next_state = None
+            best_value = -float('inf')
+            for res in cur_res:
+                node = nodeDict.get((player, res))
+                value = node[1] / node[0] + sqrt(2*log(total_visits) / node[0])
+                if value > best_value:
+                    best_value = value
+                    next_state = res
+        else:
+            next_state = choice(cur_res)
+
+        # if need to expand
+        if expand:
+            visit_path.add((player, next_state))
+        if expand and (player, next_state) not in nodeDict:
+            expand = False
+            nodeDict[(player, next_state)] = [0, 0]
+
+        # Update
+        pos = next_state
+        player = pos.next_player()
+        if pos.game_over():
+            curWinner = next_state.winner()
+            break
+
+    # Back-propagate
+    for player, pos in visit_path:
+        if (player, pos) in nodeDict:
+            nodeDict[(player, pos)][0] += 1
+            if (player == 0 and curWinner == 1) or (player == 1 and curWinner == -1):
+                nodeDict[(player, pos)][1] += 1
+
 
 def mcts_strategy(itermax):
     def fxn(pos):
-        move = mcts(itermax, pos)
-        return move
+        # check if termianl state
+        if pos.game_over():
+            return None
+        if len(pos.legal_moves()) == 1:
+            return pos.legal_moves()[0]
+        # check if initial
+        if pos.is_initial():
+            nodeDict.clear()
+
+        for i in range(itermax):
+            mcts(pos)
+
+        posPlayer = pos.next_player()
+        reslist = list()
+        for move in pos.legal_moves():
+            res = pos.result(move)
+            value = nodeDict.get((posPlayer, res), [0, 0])[1] / nodeDict.get((posPlayer, res), [1, 1])[0]
+            reslist.append((value, move))
+        return sorted(reslist, key = lambda x:x[0])[-1][1]
+
+        '''
+        moves_res = [(move, pos.result(move)) for move in pos.legal_moves()]
+        best_move = None
+        best_value = -float('inf')
+        for move, res in moves_res:
+            value = nodeDict.get((posPlayer, res), [0, 0])[1] / nodeDict.get((posPlayer, res), [1, 1])[0]
+            if value > best_value:
+                best_value = value
+                best_move = move
+        return best_move
+        '''
+
     return fxn
-
-class Node:
-    def __init__(self, move = None, state = None, parent = None, player = None):
-        self.move         = move
-        self.parentNode   = parent
-        self.childrenList = []
-        self.visitTimes   = 0
-        self.winScore     = 0
-        self.futureMoves  = state.legal_moves()
-        self.nextPlayer   = player
-
-    def UCTselection(self):
-        total_visits = 0
-        for c in self.childrenList:
-            total_visits += c.visitTimes
-        s = sorted(self.childrenList, key = lambda c: c.winScore/c.visitTimes + sqrt(2*log(total_visits)/c.visitTimes))[-1]
-        s.parentNode = self
-        return s
-    
-    def AddNode(self, m, s, posPlayer):
-        if (posPlayer, s) in nodeDict:
-            n.move = m
-            n.parentNode = self    
-            n = nodeDict[(posPlayer, s)]   
-        else:
-            n = Node(move = m, state = s, parent = self, player = posPlayer)
-        nodeDict[(posPlayer, s)] = n
-
-        self.futureMoves.remove(m)
-        self.childrenList.append(n)
-        return n
-    
-    def Update(self, result):
-        self.visitTimes += 1
-        self.winScore   += result
-
-def mcts(itermax, pos):
-    # check if initial state meet
-    posPlayer = pos.next_player()
-    if pos.is_initial():
-        nodeDict.clear()
-    # check the node dict    
-    if (posPlayer, pos) in nodeDict:
-        root = nodeDict[(posPlayer, pos)]
-        root.parentNode = None
-    else:
-        root = Node(state = pos, player = posPlayer)
-        nodeDict[(posPlayer, pos)] = root
-
-    # do the iteration
-    for i in range(itermax):
-        node  = root
-        state = copy.deepcopy(pos)
-
-        visited_path = set()
-
-        # Select
-        while node.futureMoves == [] and node.childrenList != []:
-            node      = node.UCTselection()
-            state     = state.result(node.move)
-            posPlayer = state.next_player()
-        
-        # Expand
-        if node.futureMoves != []:
-            rmchoice  = random.choice(node.futureMoves)
-            state     = state.result(rmchoice)
-            posPlayer = state.next_player()
-            node      = node.AddNode(rmchoice, state, posPlayer)
-
-        # Rollout
-        simuDepth = 0
-        while not state.game_over() and simuDepth < max_depth:
-            simuDepth += 1
-            state     = state.result(random.choice(state.legal_moves()))
-            posPlayer = state.next_player()
-       
-        # Backpropagate
-        terminal_state = state.game_over()
-        curWinner = state.winner()
-        while node != None:
-            point = 0
-            if terminal_state and (node.nextPlayer == 1 and curWinner == 1) or (node.nextPlayer == 0 and curWinner == -1):
-                point += 1
-            elif curWinner == 0:
-                point += 0.5
-            node.Update(point)
-            node = node.parentNode
-    
-    return sorted(root.childrenList, key = lambda c: c.winScore/c.visitTimes)[-1].move
 
 if __name__ == '__main__':
     b = Kalah(6)

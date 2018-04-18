@@ -158,6 +158,7 @@ class Kalah:
 
             # free turn if ending in store
             if last == succ._board.stores[self._turn]:
+                #print("INSIDE")
                 succ._turn = self._turn
             else:
                 succ._turn = 1 - self._turn
