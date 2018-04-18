@@ -72,19 +72,8 @@ def mcts_strategy(itermax):
             res = pos.result(move)
             value = nodeDict.get((posPlayer, res), [0, 0])[1] / nodeDict.get((posPlayer, res), [1, 1])[0]
             reslist.append((value, move))
+        # return the move with the maximum value of wins/visits
         return sorted(reslist, key = lambda x:x[0])[-1][1]
-
-        '''
-        moves_res = [(move, pos.result(move)) for move in pos.legal_moves()]
-        best_move = None
-        best_value = -float('inf')
-        for move, res in moves_res:
-            value = nodeDict.get((posPlayer, res), [0, 0])[1] / nodeDict.get((posPlayer, res), [1, 1])[0]
-            if value > best_value:
-                best_value = value
-                best_move = move
-        return best_move
-        '''
 
     return fxn
 
