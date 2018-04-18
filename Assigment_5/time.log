@@ -1,0 +1,29 @@
+ESTIMATE of time to complete assignment: 10 hours
+      Time     Time
+Date  Started  Spent Work completed
+----  -------  ----  --------------
+4/16  10:00am  1:00  read assignment and learn monte calro tree search based on the class note.
+4/16  03:00pm  1:30  search and learn monte calro tree search especially the UCB part online.
+4/16  08:00pm  2:00  started the basic version, implement the basic four phases of MCTS including
+					 Search, Expand, Simulation and Backpropagation.
+4/17  09:00am  4:00  testing the 1000 iteration cases and found the win rate is too low, debug the code
+					 and converting the idea from complicte OO design version to simple dictionary version
+4/17  04:00pm  3:00  working on improving the winner rate and reduce the time comeplexcity of the code, 
+					 reomove deep copy part and convert to function version of MCTS
+4/18  02:00pm  4:00  testing the 1000 iteration case for 10 times, found that 8 out of 10 tests were
+					 passed. Tested the 10000 iteration for 2 times, all passed with win rate around 0.8
+4/18  07:00pm  0:30  finished the time log
+               ----
+               16:00 TOTAL time spent
+
+I discussed my solution with: No one
+
+The idea of this assignment is to implement monte calro tree search in a DAG. My first version of code is
+a use a node class to store the information for each node built in the monte calro tree. This version of
+monte calro tree search works bad as it will always update the parent node's value in node even though
+it has reached the start of the path. Becasue of that, I changed my version to a simple one, where I use
+a list to record each node's wins and visits, then mapping its corresponding state and player to that
+list inside a dictionary. Meanwhile, I also cost much time on calculating and picking the maximum in the
+UCB process, where the my initial implement of the formula is not correct. Correcting the UCB and picking
+the best move based on the value of wins/visits of each node inside the dictionary, I then get the win
+increasing to aorund 0.53 with 1000 iterations, as well as a win rate of 0.8 for 10000 iterations.
