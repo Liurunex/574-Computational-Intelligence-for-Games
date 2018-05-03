@@ -607,9 +607,8 @@ def evaluate_strategy(n, choose_dice, choose_category, log=null_log):
 
 def main():
     strat = RandomStrategy()
-    mean = evaluate_strategy(1, strat.choose_dice, strat.choose_category, stdout_log)
+    mean = evaluate_strategy(2564, strat.choose_dice, strat.choose_category, stdout_log)
     print(mean)
 
-    
 if __name__ == "__main__":
     main()
