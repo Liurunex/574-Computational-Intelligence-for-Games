@@ -1,5 +1,6 @@
 from keras.models import Sequential
 from keras.layers import Dense, Dropout
+from keras.models import load_model
 from keras.optimizers import SGD
 import numpy as np
 
@@ -288,36 +289,172 @@ def train():
     model = Sequential()
     model.add(Dense(300, input_dim=x_train.shape[1], activation='relu'))
     model.add(Dropout(0.1))
-    model.add(Dense(y_train.shape[1], activation='sigmoid'))
+    model.add(Dense(y_train.shape[1], activation='softmax'))
 
     # compile the model
     # sgd = SGD(lr=0.1, decay=1e-6, momentum=0.8, nesterov=True)
-    model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
     # fit the model
-    model.fit(x_train, y_train, epochs=100, batch_size=50)
+    model.fit(x_train, y_train, epochs=100, batch_size=32)
 
     # test data result
     y_predict = [max(enumerate(y), key=lambda x: x[1])[0] for y in model.predict(x_test)]
     y_correct = [max(enumerate(y), key=lambda x: x[1])[0] for y in y_test]
     print(sum((1 if y[0] == y[1] else 0) for y in zip(y_predict, y_correct)) / len(y_predict))
 
+    model.save('model.h5')
+    return model
 
-class NNstrategy:
+
+def encode_position(sheet, roll, reroll=0):
+    res = [0] * (len(all_categories) + 1 + 6 + 1)
+    # encode scores sheet
+    sheet_str = sheet.as_state_string()
+
+    for cat in sheet_str.split():
+        if 'UP' in cat:
+            res[13] = min(float(cat[2:]) / 63, 1)
+            break
+        if 'Y+' == cat:
+            cat = 'Y'
+        res[all_categories.index(cat)] = 1
+
+    # encode dices
+    board = roll.as_list()
+    for i in range(6):
+        c = i+1
+        res[i+14] = board.count(c)
+    # encode the reroll
+    res[20] = float(reroll)/2
+
+    res = [float(i) for i in res]
+
+    # print(f'{res} is the encoded input')
+    return res
+
+
+class NNStrategy:
     # parameter: object returned from train()
-    def __index__(self, nn_object):
-        self.nn = nn_object
+    def __init__(self, nn_model=None):
+        if nn_model is None:
+            self.model = load_model('model.h5')
+        else:
+            self.model = nn_model
+
 
     # meet yahtzee.evaluate_strategy
     def choose_dice(self, sheet, roll, reroll):
-        pass
+        x_list = encode_position(sheet, roll, reroll)
+        # print('--------DICE----------')
+        # print(f'sheet is {sheet.as_state_string()}')
+        # print(f'roll is {roll.as_list()}')
+        # print(f'reroll is {reroll}')
+        # print(f'encoded {x_list}')
+        # get the trained result
+        x_input = np.matrix(x_list)
+        prediction = self.model.predict(x_input)[0]
+        # print(f'prediction res: {prediction}')
+        sorted_list = sorted((e, i) for i, e in enumerate(prediction))
+        # print(f'sorted res: {sorted_list}')
+
+        keep = None
+        for prob, cat_index in reversed(sorted_list):
+            # select S
+            if categories[cat_index] == 'S':
+                if not sheet.is_marked(all_categories.index('LS')) or not sheet.is_marked(all_categories.index('SS')):
+                    keep = roll.select_for_straight(sheet)
+            # select Y
+            elif categories[cat_index] == 'Y':
+                if not sheet.is_marked(all_categories.index('3K')) or not sheet.is_marked(all_categories.index('4K')) \
+                        or not sheet.is_marked(all_categories.index('Y')):
+                    keep = roll.select_for_n_kind(sheet, reroll)
+            elif categories[cat_index] == 'E':
+                keep = yahtzee.YahtzeeRoll.parse('')
+            else:
+                if not sheet.is_marked(all_categories.index(categories[cat_index])):
+                    if categories[cat_index] == 'FH':
+                        keep = roll.select_for_full_house()
+                    elif categories[cat_index] == 'C':
+                        keep = roll.select_for_chance(reroll)
+                    # select 1-6s
+                    else:
+                        keep = roll.select_all([int(categories[cat_index])])
+            if keep is not None:
+                break
+
+        if keep is None:
+            print("------ dice not possible------")
+
+        return keep
 
     # meet yahtzee.evaluate_strategy
     def choose_category(self, sheet, roll):
-        pass
+        x_list = encode_position(sheet, roll)
+        # print('--------CATEGORY----------')
+        # print(f'sheet is {sheet.as_state_string()}')
+        # print(f'roll is {roll.as_list()}')
+        # print(f'encoded {x_list}')
+        # get the trained result
+        x_input = np.matrix(x_list)
+        prediction = self.model.predict(x_input)[0]
+        # print(f'prediction res: {prediction}')
+        sorted_list = sorted((e, i) for i, e in enumerate(prediction))
+        # print(f'sorted res: {sorted_list}')
 
+        label = -1
+        count = []
+        for index, cat in enumerate(all_categories):
+            if not sheet.is_marked(index):
+                count.append(index)
+        if count == 1:
+            return count[0]
 
+        # print(f'rest opening: {count}')
+        for prob, cat_index in reversed(sorted_list):
+            # select S
+            board = roll.as_list()
+            if categories[cat_index] == 'S':
+                    num_set = set()
+                    for i in board:
+                        num_set.add(i)
+                    if len(num_set) == 5 and not sheet.is_marked(all_categories.index('LS')):
+                        label = all_categories.index('LS')
+                    elif len(num_set) == 4 and not sheet.is_marked(all_categories.index('SS')):
+                        label = all_categories.index('SS')
+            # select Y
+            elif categories[cat_index] == 'Y':
+                max_freq = board.count(max(set(board), key=board.count))
+                if max_freq == 3 and not sheet.is_marked(all_categories.index('3K')):
+                    label = all_categories.index('3K')
+                elif max_freq == 4 and not sheet.is_marked(all_categories.index('4K')):
+                    label = all_categories.index('4K')
+                elif max_freq == 5 and not sheet.is_marked(all_categories.index('Y')):
+                    label = all_categories.index('Y')
+            elif categories[cat_index] == 'E':
+                continue
+            else:
+                if not sheet.is_marked(all_categories.index(categories[cat_index])):
+                    if categories[cat_index] == 'FH' and roll.is_full_house():
+                        label = all_categories.index('FH')
+                    # select 1-6s or C
+                    else:
+                        label = all_categories.index(categories[cat_index])
+
+            if label != -1:
+                break
+        # final catch, no reward
+        if label == -1:
+            # print("------ category not possible------")
+            for index, cat in enumerate(all_categories):
+                if not sheet.is_marked(index):
+                    label = index
+                    break
+        return label
+
+'''
 if __name__ == "__main__":
-    # classification()
-    # normalization()
+    classification()
+    normalization()
     train()
+'''
