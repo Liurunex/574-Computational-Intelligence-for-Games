@@ -610,5 +610,6 @@ def main():
     mean = evaluate_strategy(2564, strat.choose_dice, strat.choose_category, stdout_log)
     print(mean)
 
+    
 if __name__ == "__main__":
     main()

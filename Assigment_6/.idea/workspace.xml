@@ -9,27 +9,33 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_TABLE_DETAILS" value="true" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <expand />
+    <select />
+  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="nn.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="nn.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/nn.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="23" column="36" lean-forward="false" selection-start-line="23" selection-start-column="36" selection-end-line="23" selection-end-column="36" />
+            <state relative-caret-position="628">
+              <caret line="312" column="12" lean-forward="true" selection-start-line="312" selection-start-column="12" selection-end-line="312" selection-end-column="12" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="yahtzee.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/yahtzee.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3391">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#29#0" expanded="true" />
+                <element signature="e#180#283#0" expanded="false" />
+                <element signature="e#302#427#0" expanded="false" />
+                <element signature="e#452#529#0" expanded="false" />
+                <element signature="e#558#639#0" expanded="false" />
+                <element signature="e#667#745#0" expanded="false" />
+                <element signature="e#774#7605#0" expanded="false" />
+                <element signature="e#7633#8894#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -37,9 +43,23 @@
       </file>
     </leaf>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>label</find>
+      <find>select_for_chan</find>
+      <find>categories</find>
+      <find>train</find>
+      <find>choo</find>
+      <find>print</find>
+      <find>enumerate</find>
+      <find>append('LS')</find>
+      <find>label.append</find>
+    </findStrings>
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/yahtzee.py" />
         <option value="$PROJECT_DIR$/nn.py" />
       </list>
     </option>
@@ -51,10 +71,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="70" />
+    <option name="x" value="50" />
     <option name="y" value="22" />
-    <option name="width" value="1210" />
-    <option name="height" value="778" />
+    <option name="width" value="1258" />
+    <option name="height" value="1058" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -72,6 +92,7 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -83,7 +104,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -117,20 +137,20 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="70" y="22" width="1210" height="778" extended-state="0" />
+    <frame x="50" y="22" width="1258" height="1058" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14469178" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16652858" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -148,26 +168,133 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$USER_HOME$/Library/Caches/PyCharm2017.2/python_stubs/1025205290/builtins.py</url>
+          <line>1336</line>
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="2" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/nn.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="23" column="36" lean-forward="false" selection-start-line="23" selection-start-column="36" selection-end-line="23" selection-end-column="36" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
+            <element signature="e#180#283#0" expanded="false" />
+            <element signature="e#302#427#0" expanded="false" />
+            <element signature="e#452#529#0" expanded="false" />
+            <element signature="e#558#639#0" expanded="false" />
+            <element signature="e#667#745#0" expanded="false" />
+            <element signature="e#774#7605#0" expanded="false" />
+            <element signature="e#7633#8894#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://Python/#/Users/Runex/Dropbox/ScreenDesk/2018Winter/Games_574/574-Computational-Intelligence-for-Games/Assigment_6/yahtzee.py">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>Python</ID>
+          <OriginalElement>#/Users/Runex/Dropbox/ScreenDesk/2018Winter/Games_574/574-Computational-Intelligence-for-Games/Assigment_6/yahtzee.py</OriginalElement>
+          <nodes>
+            <node x="299.0" y="521.0">yahtzee.YahtzeeScoresheet</node>
+            <node x="305.5" y="0.0">_collections_abc.Hashable</node>
+            <node x="541.0" y="510.0">yahtzee.YahtzeeRoll</node>
+            <node x="264.5" y="123.0">object</node>
+            <node x="0.0" y="664.0">yahtzee.RandomStrategy</node>
+          </nodes>
+          <notes />
+          <edges>
+            <edge source="object" target="_collections_abc.Hashable">
+              <point x="0.0" y="-168.5" />
+              <point x="0.0" y="36.5" />
+            </edge>
+            <edge source="yahtzee.YahtzeeRoll" target="object">
+              <point x="0.0" y="-212.5" />
+              <point x="682.0" y="485.0" />
+              <point x="507.0" y="485.0" />
+              <point x="97.0" y="168.5" />
+            </edge>
+            <edge source="yahtzee.YahtzeeScoresheet" target="object">
+              <point x="0.0" y="-201.5" />
+              <point x="0.0" y="168.5" />
+            </edge>
+            <edge source="yahtzee.RandomStrategy" target="object">
+              <point x="0.0" y="-58.5" />
+              <point x="139.5" y="485.0" />
+              <point x="313.0" y="485.0" />
+              <point x="-97.0" y="168.5" />
+            </edge>
+          </edges>
+          <settings layout="Hierarchic Group" zoom="1.0" x="-49.0" y="678.0" />
+          <SelectedNodes>
+            <node>yahtzee.YahtzeeRoll</node>
+          </SelectedNodes>
+          <Categories>
+            <Category>Methods</Category>
+          </Categories>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Library/Caches/PyCharm2017.2/python_stubs/1025205290/builtins.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="1258" column="8" lean-forward="false" selection-start-line="1258" selection-start-column="8" selection-end-line="1258" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/yahtzee.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3391">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="366">
+          <caret line="254" column="18" lean-forward="true" selection-start-line="254" selection-start-column="18" selection-end-line="254" selection-end-column="18" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
+            <element signature="e#166#236#0" expanded="false" />
+            <element signature="e#268#441#0" expanded="false" />
+            <element signature="e#482#641#0" expanded="false" />
+            <element signature="e#678#827#0" expanded="false" />
+            <element signature="e#859#1036#0" expanded="false" />
+            <element signature="e#1083#1282#0" expanded="false" />
+            <element signature="e#1322#1703#0" expanded="false" />
+            <element signature="e#1752#2103#0" expanded="false" />
+            <element signature="e#2152#2792#0" expanded="false" />
+            <element signature="e#2826#2936#0" expanded="false" />
+            <element signature="e#3983#4247#0" expanded="false" />
+            <element signature="e#4299#4620#0" expanded="false" />
+            <element signature="e#4673#5884#0" expanded="false" />
+            <element signature="e#5922#6588#0" expanded="false" />
+            <element signature="e#6648#7865#0" expanded="false" />
+            <element signature="e#14088#14092#0" expanded="false" />
+            <element signature="e#14137#14236#0" expanded="false" />
+            <element signature="e#14306#15651#0" expanded="false" />
+            <element signature="e#15834#17405#0" expanded="false" />
+            <element signature="e#17483#18061#0" expanded="false" />
+            <element signature="e#18114#18478#0" expanded="false" />
+            <element signature="e#18567#19178#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="628">
+          <caret line="312" column="12" lean-forward="true" selection-start-line="312" selection-start-column="12" selection-end-line="312" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+            <element signature="e#180#283#0" expanded="false" />
+            <element signature="e#302#427#0" expanded="false" />
+            <element signature="e#452#529#0" expanded="false" />
+            <element signature="e#558#639#0" expanded="false" />
+            <element signature="e#667#745#0" expanded="false" />
+            <element signature="e#774#7605#0" expanded="false" />
+            <element signature="e#7633#8894#0" expanded="false" />
           </folding>
         </state>
       </provider>
