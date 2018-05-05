@@ -1,4 +1,4 @@
-/Temp
+Temp/
 .DS_Store
-/__pycache__
-/.idea
+_pycache__/
+.idea/
