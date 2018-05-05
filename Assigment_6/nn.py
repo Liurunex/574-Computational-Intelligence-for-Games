@@ -287,13 +287,15 @@ def train():
 
     # define a full-connected network structure with 3 layers
     model = Sequential()
-    model.add(Dense(300, input_dim=x_train.shape[1], activation='relu'))
+    model.add(Dense(150, input_dim=x_train.shape[1], activation='relu'))
     model.add(Dropout(0.1))
-    model.add(Dense(y_train.shape[1], activation='softmax'))
+    model.add(Dense(150, input_dim=x_train.shape[1], activation='relu'))
+    model.add(Dropout(0.1))
+    model.add(Dense(y_train.shape[1], activation='sigmoid'))
 
     # compile the model
     # sgd = SGD(lr=0.1, decay=1e-6, momentum=0.8, nesterov=True)
-    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+    model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
     # fit the model
     model.fit(x_train, y_train, epochs=100, batch_size=32)
@@ -346,17 +348,9 @@ class NNStrategy:
     # meet yahtzee.evaluate_strategy
     def choose_dice(self, sheet, roll, reroll):
         x_list = encode_position(sheet, roll, reroll)
-        # print('--------DICE----------')
-        # print(f'sheet is {sheet.as_state_string()}')
-        # print(f'roll is {roll.as_list()}')
-        # print(f'reroll is {reroll}')
-        # print(f'encoded {x_list}')
-        # get the trained result
         x_input = np.matrix(x_list)
         prediction = self.model.predict(x_input)[0]
-        # print(f'prediction res: {prediction}')
         sorted_list = sorted((e, i) for i, e in enumerate(prediction))
-        # print(f'sorted res: {sorted_list}')
 
         keep = None
         for prob, cat_index in reversed(sorted_list):
@@ -391,16 +385,9 @@ class NNStrategy:
     # meet yahtzee.evaluate_strategy
     def choose_category(self, sheet, roll):
         x_list = encode_position(sheet, roll)
-        # print('--------CATEGORY----------')
-        # print(f'sheet is {sheet.as_state_string()}')
-        # print(f'roll is {roll.as_list()}')
-        # print(f'encoded {x_list}')
-        # get the trained result
         x_input = np.matrix(x_list)
         prediction = self.model.predict(x_input)[0]
-        # print(f'prediction res: {prediction}')
         sorted_list = sorted((e, i) for i, e in enumerate(prediction))
-        # print(f'sorted res: {sorted_list}')
 
         label = -1
         count = []
@@ -410,7 +397,6 @@ class NNStrategy:
         if count == 1:
             return count[0]
 
-        # print(f'rest opening: {count}')
         for prob, cat_index in reversed(sorted_list):
             # select S
             board = roll.as_list()
@@ -422,8 +408,15 @@ class NNStrategy:
                         label = all_categories.index('LS')
                     elif len(num_set) == 4 and not sheet.is_marked(all_categories.index('SS')):
                         label = all_categories.index('SS')
+
+                    if label == -1:
+                        if not sheet.is_marked(all_categories.index('LS')):
+                            label = all_categories.index('LS')
+                        elif not sheet.is_marked(all_categories.index('SS')):
+                            label = all_categories.index('SS')
             # select Y
             elif categories[cat_index] == 'Y':
+
                 max_freq = board.count(max(set(board), key=board.count))
                 if max_freq == 3 and not sheet.is_marked(all_categories.index('3K')):
                     label = all_categories.index('3K')
@@ -431,6 +424,15 @@ class NNStrategy:
                     label = all_categories.index('4K')
                 elif max_freq == 5 and not sheet.is_marked(all_categories.index('Y')):
                     label = all_categories.index('Y')
+
+                if label == -1:
+                    if not sheet.is_marked(all_categories.index('Y')):
+                        label = all_categories.index('Y')
+                    elif not sheet.is_marked(all_categories.index('4K')):
+                        label = all_categories.index('4K')
+                    elif not sheet.is_marked(all_categories.index('3K')):
+                        label = all_categories.index('3K')
+
             elif categories[cat_index] == 'E':
                 continue
             else:
@@ -452,9 +454,8 @@ class NNStrategy:
                     break
         return label
 
-'''
+
 if __name__ == "__main__":
-    classification()
-    normalization()
+    # classification()
+    # normalization()
     train()
-'''

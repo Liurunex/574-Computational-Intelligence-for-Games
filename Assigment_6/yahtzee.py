@@ -602,6 +602,8 @@ def evaluate_strategy(n, choose_dice, choose_category, log=null_log):
     total = 0
     for i in range(n):
         total += play_solitaire(choose_dice, choose_category, log)
+        if i % 1000 == 0 and i > 1:
+            print(f'result: {total/(i+1)}')
     return total / n
 
 
