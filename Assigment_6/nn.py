@@ -298,7 +298,7 @@ def train():
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
     # fit the model
-    model.fit(x_train, y_train, epochs=100, batch_size=32)
+    model.fit(x_train, y_train, epochs=150, batch_size=32)
 
     # test data result
     y_predict = [max(enumerate(y), key=lambda x: x[1])[0] for y in model.predict(x_test)]
