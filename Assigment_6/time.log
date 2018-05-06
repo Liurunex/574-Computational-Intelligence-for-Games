@@ -1,0 +1,30 @@
+ESTIMATE of time to complete assignment: 10 hours
+      Time     Time
+Date  Started  Spent Work completed
+----  -------  ----  --------------
+5/03  10:00am  1:00  read assignment, configure keras environment, lean about building a nerual netowrk on
+					 keras and collect the data form sampling.
+5/03  02:00pm  3:00  mark the label of each data inside the original dataset based on knowldge; tried serveral
+					 ways to determining the specific lable
+5/04  08:00am  1:30  build a nerual network with only one hidden layer. Training the simple model with training.dat
+					 which contains 100000 examples, where 80% of them used for training, while 20% used for testing;
+					 the training and testing accuracy is acceptable
+5/04  01:00pm  2:00  implement the strategy class and the two fucntions. Testing the training model by playing 200000 games, 
+					 reward a low average score.
+5/04  07:00pm  2:00  chaning the model to the nerual network with 2 hidden layers. Changing the strategy of choosing dice and
+					 category.  
+5/05  10:00am  1:30  testing the training model by playing 200000 games, reward a acceptable score.
+5/05  02:00pm  6:00  keep working on increase the performance; finished the time log
+               ----
+               17:00 TOTAL time spent
+
+I discussed my solution with: No one
+
+The idea of this assignment is using a nernual netowrk with reasonable example data ot training a model, as well as devide
+a way to applying the model into the game. There are several hard work I met during doing this assignment. The first one
+will be the way to labeling the example data. Since we are not giving a direct way to do this, I have to build rules to 
+classify those example data insinde with multi-label. This job cost much time, since the labels will siginificant impact
+the performance of our model. The next hard job is configure the nerual network. I basically followed the class notes to
+build my own model, but it worked bad so that I have to make it complicate by adding additional hidden layer. The last diffucult
+thing is devide a strategy to applying our model output to reasonably play the game. By observing the game rules, I finally find
+a acceptable way to do this, but it just works as a normal player, not a wise one 

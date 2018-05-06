@@ -299,7 +299,7 @@ def train():
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
     # fit the model
-    model.fit(x_train, y_train, epochs=150, batch_size=64)
+    model.fit(x_train, y_train, epochs=150, batch_size=128)
 
     '''
     # test data result
@@ -456,8 +456,9 @@ class NNStrategy:
                     break
         return label
 
-
+'''
 if __name__ == "__main__":
     # classification()
     # normalization()
     train()
+'''
