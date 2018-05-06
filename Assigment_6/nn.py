@@ -276,14 +276,15 @@ def train():
         x.append(line_x)
         y.append(line_y)
 
-    test_size = int(len(x)/5)
+    # test_size = int(len(x)/5)
+    test_size = 0
     train_size = len(x) - test_size
 
     x_train = np.matrix(x[:train_size])
     y_train = np.matrix(y[:train_size])
 
-    x_test = np.matrix(x[train_size:])
-    y_test = y[train_size:]
+    # x_test = np.matrix(x[train_size:])
+    # y_test = y[train_size:]
 
     # define a full-connected network structure with 3 layers
     model = Sequential()
@@ -298,14 +299,15 @@ def train():
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
     # fit the model
-    model.fit(x_train, y_train, epochs=150, batch_size=32)
+    model.fit(x_train, y_train, epochs=150, batch_size=64)
 
+    '''
     # test data result
     y_predict = [max(enumerate(y), key=lambda x: x[1])[0] for y in model.predict(x_test)]
     y_correct = [max(enumerate(y), key=lambda x: x[1])[0] for y in y_test]
     print(sum((1 if y[0] == y[1] else 0) for y in zip(y_predict, y_correct)) / len(y_predict))
-
     model.save('model.h5')
+    '''
     return model
 
 
